@@ -1,0 +1,577 @@
+{
+	"info": {
+		"_postman_id": "c742ff49-6a52-4fc7-a2c9-cae47710cb2c",
+		"name": "Statement Processor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Validation",
+			"item": [
+				{
+					"name": "Post Valid Statement",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8bc562fa-a80e-4d6c-81ec-4dc8d534ae90",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"result is SUCCESSFUL\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.result).to.eql(\"SUCCESSFUL\");",
+									"});",
+									"",
+									"pm.test(\"errorRecords is Empty\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.errorRecords.length).to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n   {\n      \"reference\":6451958879,\n      \"account\":\"NL47RABO6383931601\",\n      \"description\":\"Blender Cloud Compassionate\",\n      \"mutation\":-97.15,\n      \"start_balance\":70.74,\n      \"end_balance\":-26.41\n   },\n   {\n      \"reference\":331109988,\n      \"account\":\"NL39RABO8247360527\",\n      \"description\":\"Derelict Boom Chisel Console\",\n      \"mutation\":-73.00,\n      \"start_balance\":99.20,\n      \"end_balance\":26.20\n   },\n   {\n      \"reference\":4435175220,\n      \"account\":\"NL16RABO8683750361\",\n      \"description\":\"Drill Diagonal Creeper Americana\",\n      \"mutation\":17.82,\n      \"start_balance\":9.51,\n      \"end_balance\":27.33\n   },\n   {\n      \"reference\":8156828735,\n      \"account\":\"NL74INGB1579872026\",\n      \"description\":\"Disbeliever Horseplay Mystery Low\",\n      \"mutation\":-96.77,\n      \"start_balance\":15.81,\n      \"end_balance\":-80.96\n   },\n   {\n      \"reference\":208971279,\n      \"account\":\"NL35ABNA9627994502\",\n      \"description\":\"Hometown Gauntlet Drunk \",\n      \"mutation\":-84.36,\n      \"start_balance\":98.46,\n      \"end_balance\":14.10\n   }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/validation",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"validation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Invaid JSON Statement - empty array",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "744cbe61-2713-4ba2-a435-7442e411a91f",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"result is BAD_REQUEST\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.result).to.eql(\"BAD_REQUEST\");",
+									"});",
+									"",
+									"pm.test(\"errorRecords is Empty\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.errorRecords.length).to.eql(0);",
+									"});",
+									"",
+									"pm.test(\"message contais Statement without data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Statement without data\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/validation",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"validation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Invaid JSON Statement - all fields null",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1bc6969f-9b6d-40f3-8679-59ed24179d5c",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3ba8bfb-f483-4eef-971f-3ea3e08615ac",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"result is BAD_REQUEST\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.result).to.eql(\"BAD_REQUEST\");",
+									"});",
+									"",
+									"pm.test(\"errorRecords is Empty\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.errorRecords.length).to.eql(0);",
+									"});",
+									"",
+									"pm.test(\"message contais validate.statements[0].startBalance\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include(\"validate.statements[0].startBalance\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[{}]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/validation",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"validation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Invalid Statement - HttpMediaTypeNotSupportedException",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2a520804-ac2b-4579-bf86-f9e2d082dc33",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"",
+									"pm.test(\"result is INTERNAL_SERVER_ERROR\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.result).to.eql(\"INTERNAL_SERVER_ERROR\");",
+									"});",
+									"",
+									"pm.test(\"errorRecords is Empty\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.errorRecords.length).to.eql(0);",
+									"});",
+									"",
+									"pm.test(\"message contais Content type text/plain not supported\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include(\"Content type \\'text/plain\\' not supported\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "asdsadsdasdsd",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/validation",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"validation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post With Duplicate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7aedab92-38b8-4719-8848-156f9bba3504",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"result is DUPLICATE_REFERENCE\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.result).to.eql(\"DUPLICATE_REFERENCE\");",
+									"});",
+									"",
+									"pm.test(\"errorRecords is not Empty\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.errorRecords.length).to.eql(2);",
+									"});",
+									"",
+									"pm.test(\"errorRecords[0].reference is equal 331109988\", function () {",
+									"    var jsonData = pm.response.json();",
+									"",
+									"    var result;",
+									"    for (var loop = 0; loop < jsonData.errorRecords.length; loop++)",
+									"        {",
+									"        if (jsonData.errorRecords[loop].reference === 331109988){",
+									"            result=true;",
+									"            break;",
+									"        }",
+									"    }",
+									"    pm.expect(true).to.eql(result);",
+									"});",
+									"",
+									"pm.test(\"errorRecords[1].reference is equal 6451958879\", function () {",
+									"    var jsonData = pm.response.json();",
+									"",
+									"    var result;",
+									"    for (var loop = 0; loop < jsonData.errorRecords.length; loop++)",
+									"        {",
+									"        if (jsonData.errorRecords[loop].reference === 6451958879){",
+									"            result=true;",
+									"            break;",
+									"        }",
+									"    }",
+									"    pm.expect(true).to.eql(result);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n   {\n      \"reference\":6451958879,\n      \"account\":\"NL47RABO6383931601\",\n      \"description\":\"Blender Cloud Compassionate\",\n      \"mutation\":-97.15,\n      \"start_balance\":70.74,\n      \"end_balance\":-26.41\n   },\n   {\n      \"reference\":331109988,\n      \"account\":\"NL39RABO8247360527\",\n      \"description\":\"Derelict Boom Chisel Console\",\n      \"mutation\":-73.00,\n      \"start_balance\":99.20,\n      \"end_balance\":26.20\n   },\n   {\n      \"reference\":4435175220,\n      \"account\":\"NL16RABO8683750361\",\n      \"description\":\"Drill Diagonal Creeper Americana\",\n      \"mutation\":17.82,\n      \"start_balance\":9.51,\n      \"end_balance\":27.33\n   },\n   {\n      \"reference\":331109988,\n      \"account\":\"NL74INGB1579872026\",\n      \"description\":\"Disbeliever Horseplay Mystery Low\",\n      \"mutation\":-96.77,\n      \"start_balance\":15.81,\n      \"end_balance\":-80.96\n   },\n   {\n      \"reference\":208971279,\n      \"account\":\"NL35ABNA9627994502\",\n      \"description\":\"Hometown Gauntlet Drunk \",\n      \"mutation\":-84.36,\n      \"start_balance\":98.46,\n      \"end_balance\":14.10\n   },\n   {\n      \"reference\":6451958879,\n      \"account\":\"NL47RABO6383931601\",\n      \"description\":\"Blender Cloud Compassionate\",\n      \"mutation\":-97.15,\n      \"start_balance\":70.74,\n      \"end_balance\":-26.41\n   }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/validation",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"validation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post With Invalid Balance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6eee13d3-a7f1-45b9-879c-4dc2ee7a033d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"result is INCORRECT_END_BALANCE\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.result).to.eql(\"INCORRECT_END_BALANCE\");",
+									"});",
+									"",
+									"pm.test(\"errorRecords is not Empty\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.errorRecords.length).to.eql(2);",
+									"});",
+									"",
+									"pm.test(\"errorRecords[0].reference is equal 331109988\", function () {",
+									"    var jsonData = pm.response.json();",
+									"",
+									"    var result;",
+									"    for (var loop = 0; loop < jsonData.errorRecords.length; loop++)",
+									"        {",
+									"        if (jsonData.errorRecords[loop].reference === 331109988){",
+									"            result=true;",
+									"            break;",
+									"        }",
+									"    }",
+									"    pm.expect(true).to.eql(result);",
+									"});",
+									"",
+									"pm.test(\"errorRecords[1].reference is equal 208971279\", function () {",
+									"    var jsonData = pm.response.json();",
+									"",
+									"    var result;",
+									"    for (var loop = 0; loop < jsonData.errorRecords.length; loop++)",
+									"        {",
+									"        if (jsonData.errorRecords[loop].reference === 208971279){",
+									"            result=true;",
+									"            break;",
+									"        }",
+									"    }",
+									"    pm.expect(true).to.eql(result);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n   {\n      \"reference\":6451958879,\n      \"account\":\"NL47RABO6383931601\",\n      \"description\":\"Blender Cloud Compassionate\",\n      \"mutation\":-97.15,\n      \"start_balance\":70.74,\n      \"end_balance\":-26.41\n   },\n   {\n      \"reference\":331109988,\n      \"account\":\"NL39RABO8247360527\",\n      \"description\":\"Derelict Boom Chisel Console\",\n      \"mutation\":-73.00,\n      \"start_balance\":99.20,\n      \"end_balance\":26.21\n   },\n   {\n      \"reference\":4435175220,\n      \"account\":\"NL16RABO8683750361\",\n      \"description\":\"Drill Diagonal Creeper Americana\",\n      \"mutation\":17.82,\n      \"start_balance\":9.51,\n      \"end_balance\":27.33\n   },\n   {\n      \"reference\":8156828735,\n      \"account\":\"NL74INGB1579872026\",\n      \"description\":\"Disbeliever Horseplay Mystery Low\",\n      \"mutation\":-96.77,\n      \"start_balance\":15.81,\n      \"end_balance\":-80.96\n   },\n   {\n      \"reference\":208971279,\n      \"account\":\"NL35ABNA9627994502\",\n      \"description\":\"Hometown Gauntlet Drunk \",\n      \"mutation\":-84.36,\n      \"start_balance\":98.46,\n      \"end_balance\":14.09\n   }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/validation",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"validation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post With Duplicate And Invalid Balance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c815b86c-4d8b-4ff7-8f1f-b6562bf297a7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"result is DUPLICATE_REFERENCE_INCORRECT_END_BALANCE\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.result).to.eql(\"DUPLICATE_REFERENCE_INCORRECT_END_BALANCE\");",
+									"});",
+									"",
+									"pm.test(\"errorRecords is not Empty\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.errorRecords.length).to.eql(2);",
+									"});",
+									"",
+									"pm.test(\"errorRecords[0].reference is equal 331109988\", function () {",
+									"    var jsonData = pm.response.json();",
+									"",
+									"    var result;",
+									"    for (var loop = 0; loop < jsonData.errorRecords.length; loop++)",
+									"        {",
+									"        if (jsonData.errorRecords[loop].reference === 331109988){",
+									"            result=true;",
+									"            break;",
+									"        }",
+									"    }",
+									"    pm.expect(true).to.eql(result);",
+									"});",
+									"",
+									"pm.test(\"errorRecords[1].reference is equal 3811724980\", function () {",
+									"    var jsonData = pm.response.json();",
+									"",
+									"    var result;",
+									"    for (var loop = 0; loop < jsonData.errorRecords.length; loop++)",
+									"        {",
+									"        if (jsonData.errorRecords[loop].reference === 3811724980){",
+									"            result=true;",
+									"            break;",
+									"        }",
+									"    }",
+									"    pm.expect(true).to.eql(result);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n   {\n      \"reference\":6451958879,\n      \"account\":\"NL47RABO6383931601\",\n      \"description\":\"Blender Cloud Compassionate\",\n      \"mutation\":-97.15,\n      \"start_balance\":70.74,\n      \"end_balance\":-26.41\n   },\n   {\n      \"reference\":331109988,\n      \"account\":\"NL39RABO8247360527\",\n      \"description\":\"Derelict Boom Chisel Console\",\n      \"mutation\":-73.00,\n      \"start_balance\":99.20,\n      \"end_balance\":26.20\n   },\n   {\n      \"reference\":4435175220,\n      \"account\":\"NL16RABO8683750361\",\n      \"description\":\"Drill Diagonal Creeper Americana\",\n      \"mutation\":17.82,\n      \"start_balance\":9.51,\n      \"end_balance\":27.33\n   },\n   {\n      \"reference\":331109988,\n      \"account\":\"NL41RABO8494892657\",\n      \"description\":\"Light Metal Gasmask Flower \",\n      \"mutation\":17.82,\n      \"start_balance\":9.51,\n      \"end_balance\":27.33\n   },\n   {\n      \"reference\":8156828735,\n      \"account\":\"NL74INGB1579872026\",\n      \"description\":\"Disbeliever Horseplay Mystery Low\",\n      \"mutation\":-96.77,\n      \"start_balance\":15.81,\n      \"end_balance\":-80.96\n   },\n   {\n      \"reference\":3811724980,\n      \"account\":\"NL27RABO7134534839\",\n      \"description\":\"Ankle Hills Arrival\",\n      \"mutation\":17.82,\n      \"start_balance\":9.51,\n      \"end_balance\":27.35\n   },\n   {\n      \"reference\":208971279,\n      \"account\":\"NL35ABNA9627994502\",\n      \"description\":\"Hometown Gauntlet Drunk \",\n      \"mutation\":-84.36,\n      \"start_balance\":98.46,\n      \"end_balance\":14.10\n   }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/validation",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"validation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Health Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ba9fa07a-e229-45e0-a891-ed041f59ecf5",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Status text is UP\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.status).to.eql(\"UP\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/health",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Post Something to test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8bc562fa-a80e-4d6c-81ec-4dc8d534ae90",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n   {\n      \"reference\":6451958879,\n      \"account\":\"NL47RABO6383931601\",\n      \"description\":\"Blender Cloud Compassionate\",\n      \"mutation\":-97.15,\n      \"start_balance\":70.74,\n      \"end_balance\":-26.41\n   },\n   {\n      \"reference\":331109988,\n      \"account\":\"NL39RABO8247360527\",\n      \"description\":\"Derelict Boom Chisel Console\",\n      \"mutation\":-73.00,\n      \"start_balance\":99.20,\n      \"end_balance\":26.20\n   },\n   {\n      \"reference\":4435175220,\n      \"account\":\"NL16RABO8683750361\",\n      \"description\":\"Drill Diagonal Creeper Americana\",\n      \"mutation\":17.82,\n      \"start_balance\":9.51,\n      \"end_balance\":27.33\n   },\n   {\n      \"reference\":8156828735,\n      \"account\":\"NL74INGB1579872026\",\n      \"description\":\"Disbeliever Horseplay Mystery Low\",\n      \"mutation\":-96.77,\n      \"start_balance\":15.81,\n      \"end_balance\":-80.96\n   },\n   {\n      \"reference\":208971279,\n      \"account\":\"NL35ABNA9627994502\",\n      \"description\":\"Hometown Gauntlet Drunk \",\n      \"mutation\":-84.36,\n      \"start_balance\":98.46,\n      \"end_balance\":14.10\n   }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/validation",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"validation"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "208914e3-a762-459b-a1d0-134463506231",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a487182d-3a49-4e14-baed-5d2dc6e94466",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "d3a6a7e5-7e10-47a0-8102-40921467f41f",
+			"key": "server",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
